@@ -1,0 +1,14 @@
+{
+    "public": {
+        "appName": "EstateNexus Core",
+        "version": "1.0.0"
+    },
+    "private": {
+        "smtp": {
+            "host": "smtp.gmail.com",
+            "port": 587,
+            "username": "",
+            "password": ""
+        }
+    }
+}

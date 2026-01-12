@@ -1,0 +1,38 @@
+{
+  "name": "estatenexus-core",
+  "version": "1.0.0",
+  "description": "Multi-Tenant Real Estate SaaS Framework on Meteor 3.0",
+  "scripts": {
+    "start": "meteor run --settings settings.json",
+    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "visualize": "meteor --production --extra-packages bundle-visualizer"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.23.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.263.1",
+    "meteor-node-stubs": "^1.2.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-markdown": "^9.0.1",
+    "react-meteor-data": "latest",
+    "react-router-dom": "^6.20.0",
+    "remark-gfm": "^4.0.0",
+    "simpl-schema": "^3.4.6",
+    "tailwind-merge": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/meteor": "^2.9.8",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.18",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1"
+  },
+  "meteor": {
+    "mainModule": {
+      "client": "client/main.jsx",
+      "server": "server/main.js"
+    }
+  }
+}
