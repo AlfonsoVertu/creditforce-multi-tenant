@@ -2,7 +2,7 @@
 
 ## ⚠️ Prerequisito: Installare Meteor
 
-Meteor non è attualmente installato sul sistema. 
+Installa Meteor globalmente prima di avviare il progetto.
 
 ### Windows - Installazione Meteor
 
@@ -20,25 +20,40 @@ choco install meteor
 
 ---
 
-## ✅ Status Corrente
-
-- ✅ **MongoDB Docker** - Avviato su porta 27018
-- ✅ **Replica Set** - Inizializzato
-- ✅ **Componente React** - Creato (`imports/ui/App.jsx`)
-- ⏳ **Dipendenze** - Da installare (richiede Meteor)
-
----
-
 ## 🚀 Dopo Installazione Meteor
 
 ### 1. Installa Dipendenze
 
 ```bash
-cd c:\Users\Raven\react\andrea\multi-tenant-login
 meteor npm install
 ```
 
-### 2. Avvia Applicazione
+### 2. Avvia MongoDB Docker
+
+```bash
+docker-compose up -d
+```
+
+Se è la prima volta, inizializza il replica set:
+```bash
+docker exec -it estatenexus_mongo mongosh
+rs.initiate()
+exit
+```
+
+### 3. Esporta variabile MONGO_URL
+
+macOS/Linux:
+```bash
+export MONGO_URL="mongodb://localhost:27018/estatenexus_db?replicaSet=rs0"
+```
+
+PowerShell:
+```powershell
+$env:MONGO_URL="mongodb://localhost:27018/estatenexus_db?replicaSet=rs0"
+```
+
+### 4. Avvia Applicazione
 
 ```bash
 meteor run --settings settings.json
@@ -50,7 +65,7 @@ Attendere il messaggio:
 => App running at: http://localhost:3000/
 ```
 
-### 3. Apri Browser
+### 5. Apri Browser
 
 Vai su: **http://localhost:3000**
 
@@ -61,22 +76,18 @@ Vai su: **http://localhost:3000**
 | Email | Password |
 |-------|----------|
 | `admin@system.core` | `password123` |
-| `manager@tenant-alpha.com` | `password123` |
-| `marco.rossi@provider.xyz` | `password123` |
+| `manager@banca-centrale.it` | `password123` |
+| `marco.rossi@banca-centrale.it` | `password123` |
+| `multi.agent@demo.com` | `password123` |
 
 ---
 
 ## 🎨 UI Corrente
 
-L'applicazione mostra una **landing page minimal** con:
-- 🎨 Login elegante con gradient
-- ✅ Autenticazione funzionante
-- 📊 Dashboard base che mostra info utente
-- 🔐 Logout
-
-Per avere l'**UI completa** del demo:
-1. Sostituire `imports/ui/App.jsx` con il codice fornito
-2. Integrare hooks Meteor (`useTracker`, `Meteor.call`)
+L'applicazione include una **UI demo completa** in `imports/ui/App.jsx` con:
+- Login, dashboard e moduli principali
+- Context switcher multi-tenant
+- Gestione permessi basata sui ruoli
 
 ---
 
@@ -91,22 +102,6 @@ npx meteor run --settings settings.json
 
 ---
 
-## 📊 MongoDB già configurato
-
-MongoDB è operativo:
-- **Porta**: 27018 (per evitare conflitti)
-- **Database**: estatenexus_db
-- **Replica Set**: rs0 (inizializzato)
-- **Container**: `estatenexus_mongo`
-
-Verifica:
-```bash
-docker ps
-# Dovresti vedere: estatenexus_mongo running
-```
-
----
-
 ## 🔍 Troubleshooting
 
 ### Se MongoDB non risponde
@@ -114,8 +109,8 @@ docker ps
 docker restart estatenexus_mongo
 ```
 
-### Se la porta è già in uso
-Il progetto usa già la porta 27018 invece di 27017.
+### Se la porta 27018 è già in uso
+Aggiorna la porta in `docker-compose.yml` e la variabile `MONGO_URL`.
 
 ### Script Policy Error (PowerShell)
 Esegui come Amministratore:

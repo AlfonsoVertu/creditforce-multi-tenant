@@ -1,20 +1,20 @@
-# EstateNexus Core - Multi-Tenant Real Estate SaaS
+# CreditForce Core - Multi-Tenant Credit Management SaaS
 
-Framework SaaS multi-tenant enterprise per il settore immobiliare basato su Meteor 3.0.
+Framework SaaS multi-tenant per la gestione crediti basato su Meteor 3.0.
 
 ## ⚡ Status Implementazione
 
-✅ **Backend COMPLETO** (100%):
-- Tutte le collezioni MongoDB con schema validation
-- Tutti i Meteor methods per CRUD operations
-- Tutte le publications con filtri tenant-aware
+✅ **Backend**:
+- Collezioni MongoDB con schema validation
+- Meteor methods per CRUD operations
+- Publications con filtri tenant-aware
 - Seed database con dati demo
 - Sistema permessi centralizzato
 - Audit logging automatico
 - Impersonation sicura
 
-🚧 **Frontend** (Da completare):
-- `imports/ui/App.jsx` - Adattare codice demo con Meteor integration
+✅ **Frontend Demo**:
+- UI React completa in `imports/ui/App.jsx`
 - Hooks e componenti React riutilizzabili
 
 ## Stack Tecnologico
@@ -52,7 +52,18 @@ exit
 meteor npm install
 ```
 
-### 4. Avvia Applicazione
+### 4. Esporta variabili ambiente (per usare MongoDB Docker)
+
+```bash
+export MONGO_URL="mongodb://localhost:27018/estatenexus_db?replicaSet=rs0"
+```
+
+Per PowerShell:
+```powershell
+$env:MONGO_URL="mongodb://localhost:27018/estatenexus_db?replicaSet=rs0"
+```
+
+### 5. Avvia Applicazione
 
 ```bash
 meteor run --settings settings.json
@@ -65,8 +76,9 @@ Applicazione disponibile su: http://localhost:3000
 | Email | Password | Ruolo | Descrizione |
 |-------|----------|-------|-------------|
 | admin@system.core | password123 | Super Admin | Accesso globale completo |
-| manager@tenant-alpha.com | password123 | Tenant Admin | Manager Alpha Immobiliare |
-| marco.rossi@provider.xyz | password123 | Agent | Agente Alpha Immobiliare |
+| manager@banca-centrale.it | password123 | Tenant Admin | Banca Credito Centrale |
+| marco.rossi@banca-centrale.it | password123 | Agent | Operatore senior |
+| multi.agent@demo.com | password123 | Agent | Multi-tenant demo |
 
 ## Funzionalità Principali
 
@@ -80,6 +92,7 @@ Applicazione disponibile su: http://localhost:3000
 - ✅ Audit logging immutabile
 - ✅ Note personali
 - ✅ Gestione contatti CRM
+- ✅ Gestione pratiche e workflow
 
 ## Struttura Progetto
 
@@ -92,6 +105,7 @@ Applicazione disponibile su: http://localhost:3000
     /notes         # Note personali
     /files         # File management
     /contacts      # CRM contatti
+    /practices     # Pratiche
     /audit         # Audit logging
   /ui
     /components    # Componenti React riutilizzabili
@@ -102,4 +116,4 @@ Applicazione disponibile su: http://localhost:3000
 
 ## License
 
-Proprietary - EstateNexus Core
+Proprietary - CreditForce Core
