@@ -1,4 +1,4 @@
-# 🚀 QuickStart - EstateNexus Core
+# 🚀 QuickStart - CreditForce Core
 
 ## Prerequisiti
 
@@ -11,7 +11,6 @@
 ### 1. Avvia MongoDB Docker
 
 ```bash
-cd c:\Users\Raven\react\andrea\multi-tenant-login
 docker-compose up -d
 ```
 
@@ -39,7 +38,19 @@ exit
 meteor npm install
 ```
 
-### 4. Avvia Applicazione
+### 4. Esporta variabili ambiente (per usare MongoDB Docker)
+
+macOS/Linux:
+```bash
+export MONGO_URL="mongodb://localhost:27018/estatenexus_db?replicaSet=rs0"
+```
+
+PowerShell:
+```powershell
+$env:MONGO_URL="mongodb://localhost:27018/estatenexus_db?replicaSet=rs0"
+```
+
+### 5. Avvia Applicazione
 
 ```bash
 meteor run --settings settings.json
@@ -47,13 +58,14 @@ meteor run --settings settings.json
 
 Attendere che vedi:
 ```
-🚀 EstateNexus Core Server Started
+🚀 CreditForce Server Started
 🌱 Starting database seeding...
 ✅ Database seeding completed successfully!
+✅ Server startup complete
 => App running at: http://localhost:3000/
 ```
 
-### 5. Apri Browser
+### 6. Apri Browser
 
 Vai su: **http://localhost:3000**
 
@@ -64,30 +76,30 @@ Vai su: **http://localhost:3000**
 | Email | Password | Ruolo | Descrizione |
 |-------|----------|-------|-------------|
 | `admin@system.core` | `password123` | Super Admin | Accesso globale completo |
-| `manager@tenant-alpha.com` | `password123` | Tenant Manager | Alpha Immobiliare |
-| `marco.rossi@provider.xyz` | `password123` | Senior Agent | Alpha Immobiliare |
-| `giulia.verdi@provider.xyz` | `password123` | Junior Agent | Alpha Immobiliare |
-| `manager@beta-estate.com` | `password123` | Tenant Manager | Beta Real Estate |
+| `manager@banca-centrale.it` | `password123` | Tenant Manager | Banca Credito Centrale |
+| `marco.rossi@banca-centrale.it` | `password123` | Senior Agent | Banca Credito Centrale |
+| `giulia.verdi@banca-centrale.it` | `password123` | Junior Agent | Banca Credito Centrale |
+| `manager@finanza-recuperi.it` | `password123` | Tenant Manager | Finanza Recuperi SpA |
+| `multi.agent@demo.com` | `password123` | Agent | Multi-tenant demo |
 
 ---
 
 ## 🧪 Test Rapido Funzionalità
 
 ### Test 1: Login & Multi-Profile ✅
-1. Login con `manager@tenant-alpha.com`
-2. Verifica profilo "Laura Alpha"
-3. Se utente esiste in più tenant → vedi Context Switcher
+1. Login con `multi.agent@demo.com`
+2. Verifica che compaia il Context Switcher con più tenant
 
 ### Test 2: Permessi Granulari ✅
 1. Login come Super Admin
-2. Vai su "Utenti & Permessi"
-3. Modifica permessi di un Agent
-4. Verifica che voci menu cambino
+2. Vai su "Utenti"
+3. Apri "Gestisci Permessi" per un Agent
+4. Verifica che le voci menu cambino al logout/login
 
 ### Test 3: File Visibility (Ruoli) ✅
-1. Login come `marco.rossi@provider.xyz` (Senior Agent)
-2. Vai su "Archivio Documentale"
-3. Login come `giulia.verdi@provider.xyz` (Junior Agent)
+1. Login come `marco.rossi@banca-centrale.it` (Senior Agent)
+2. Vai su "Files"
+3. Login come `giulia.verdi@banca-centrale.it` (Junior Agent)
 4. Verifica che veda SOLO file degli utenti con stesso template
 
 ### Test 4: Impersonation ✅
@@ -120,16 +132,16 @@ docker exec -it estatenexus_mongo mongosh
 rs.initiate()
 ```
 
-### Port 27017 già in uso
-Modifica `docker-compose.yml`:
+### Port 27018 già in uso
+Modifica `docker-compose.yml` con una porta libera:
 ```yaml
 ports:
-  - "27018:27017"  # Usa porta diversa
+  - "27019:27017"
 ```
 
-E `.env`:
+Poi aggiorna la variabile ambiente:
 ```
-MONGO_URL=mongodb://localhost:27018/estatenexus_db?replicaSet=rs0
+MONGO_URL=mongodb://localhost:27019/estatenexus_db?replicaSet=rs0
 ```
 
 ### Meteor non trova moduli
@@ -155,8 +167,9 @@ meteor run
     /notes               # Note personali
     /files               # File management
     /contacts            # CRM
+    /practices           # Pratiche
     /audit               # Audit logging
-  /ui                    # Frontend (Da completare)
+  /ui                    # Frontend React
   /startup
     /server              # Seed data
 ```
@@ -165,17 +178,16 @@ meteor run
 
 ## 🔥 Prossimi Passi
 
-1. **Creare `imports/ui/App.jsx`** con il codice demo adattato
-2. **Testare tutte le funzionalità** seguendo walkthrough.md
-3. **Deployment** (opzionale)
+1. **Personalizzare UI e branding** (nome progetto e colori)
+2. **Eseguire test end-to-end** su utenti e permessi
+3. **Preparare il deployment** (opzionale)
 
 ---
 
 ## 📚 Documentazione
 
-- [implementation_plan.md](file:///C:/Users/Raven/.gemini/antigravity/brain/69fc9dba-5528-45f2-a486-7e9144107b0f/implementation_plan.md) - Piano architettonico completo
-- [walkthrough.md](file:///C:/Users/Raven/.gemini/antigravity/brain/69fc9dba-5528-45f2-a486-7e9144107b0f/walkthrough.md) - Guida completamento & testing
-- [task.md](file:///C:/Users/Raven/.gemini/antigravity/brain/69fc9dba-5528-45f2-a486-7e9144107b0f/task.md) - Checklist implementazione
+- [README.md](README.md) - Panoramica progetto e funzionalità
+- [imports/startup/server/constants.js](imports/startup/server/constants.js) - Seed data (tenant, utenti, permessi)
 
 ---
 
